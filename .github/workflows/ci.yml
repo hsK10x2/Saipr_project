@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: pytest -q
+
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: saipr
+          POSTGRES_PASSWORD: saipr
+          POSTGRES_DB: saipr
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U saipr" --health-interval 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql+asyncpg://saipr:saipr@localhost:5432/saipr
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: upgrade → downgrade → upgrade on real Postgres
+        run: alembic upgrade head && alembic downgrade base && alembic upgrade head

@@ -1,7 +1,20 @@
+# Java / Spring Boot (src/, Gradle)
 .gradle/
 build/
 out/
 .idea/
 *.iml
 data/
+
+# Python / FastAPI (app/)
+__pycache__/
+*.py[cod]
+.venv/
+*.db
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+
+# 공통
 .env
