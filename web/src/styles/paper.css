@@ -1,0 +1,221 @@
+/* 시안 B · 종이 서재 — 종이 질감 · 명조 · 단일 액센트 = 인주 빨강 */
+:root[data-theme='paper'] {
+  --font-body: 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
+  --font-display: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+  --font-read: var(--font-display);
+  --font-note: 'Nanum Pen Script', cursive;
+  --note-size: 20px;
+  --kicker-spacing: 2.5px;
+
+  --outside: #d9d3c7;
+  --bg: #f3eee4
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  --text: #231f1a;
+  --text-soft: #6f675b;
+  --accent: #b3372a;
+  --note: #4a5d8a;
+  --divider: #d8cebc;
+
+  --surface: #faf7f0;
+  --surface-border: 1px solid #d8cebc;
+  --surface-shadow: inset 0 1px 0 #fff, 0 6px 14px rgb(60 40 20 / 0.07);
+  --surface-blur: none;
+  --chip-bg: transparent;
+  --radius-card: 3px;
+  --radius-btn: 4px;
+  --radius-input: 0;
+  --radius-row: 0;
+  --radius-tabbar: 0;
+  --radius-kakao: 6px;
+  --radius-guard: 3px;
+  --radius-page: 4px 10px 10px 4px;
+
+  --btn-bg: #231f1a;
+  --btn-text: #f3eee4;
+  --btn-shadow: none;
+  --badge-full-bg: transparent;
+  --badge-full-text: #b3372a;
+  --badge-full-border: 1.5px solid #b3372a;
+  --avatar-ring: #231f1a;
+
+  --track: #e9e1d1;
+  --fill: repeating-linear-gradient(-45deg, #231f1a 0 2px, transparent 2px 4px);
+  --fill-glow: none;
+  --leader-dots: 1.5px dotted #a39a8b;
+
+  --page-bg: #fbf8f1;
+  --page-text: #2a251f;
+  --page-soft: #a39a8b;
+  --page-rule: #e2d8c5;
+  /* 책장 겹침 + 제본 쪽 그림자 */
+  --page-shadow: inset 14px 0 18px -14px rgb(60 40 20 / 0.25), 0 1px 0 #e2d8c5, 0 2px 0 #fbf8f1, 0 3px 0 #e2d8c5,
+    0 12px 24px rgb(60 40 20 / 0.14);
+  --page-border: 0;
+
+  --guard-bg: #faf7f0;
+  --guard-text: #6f675b;
+  --guard-border: 1.5px dashed #a39a8b;
+  --tab-on-bg: transparent;
+  --tab-on-shadow: none;
+  --me-row-bg: transparent;
+  --me-row-text: #231f1a;
+  --seal-display: inline-grid;
+  --promo-border: 1.5px solid #b3372a;
+}
+
+/* 제목 아래 두 줄 괘선, 섹션 제목 옆 괘선 */
+[data-theme='paper'] .header {
+  padding-bottom: 14px;
+  border-bottom: 3px double #231f1a;
+}
+[data-theme='paper'] .section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+[data-theme='paper'] .section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d8cebc;
+}
+
+/* 입력은 밑줄, 칩은 밑줄 탭 */
+[data-theme='paper'] .search {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid #231f1a;
+  box-shadow: none;
+  padding: 6px 0 8px;
+}
+[data-theme='paper'] .search input {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+[data-theme='paper'] .chip {
+  border: 0;
+  padding: 4px 0;
+  margin-right: 10px;
+  color: #6f675b;
+  border-radius: 0;
+}
+[data-theme='paper'] .chip.on {
+  background: none;
+  color: #231f1a;
+  font-weight: 700;
+  border-bottom: 2px solid #b3372a;
+}
+[data-theme='paper'] .chip.static {
+  color: #b3372a;
+  border-bottom: 1.5px solid #b3372a;
+}
+[data-theme='paper'] .badge.full {
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transform: rotate(-12deg);
+  font-family: var(--font-display);
+}
+[data-theme='paper'] .result {
+  align-items: flex-start;
+}
+
+/* 친구 메모: 연필 손글씨 */
+[data-theme='paper'] .margin-note {
+  transform: rotate(-2deg);
+  margin-left: 12px;
+  align-items: center;
+}
+[data-theme='paper'] .avatar {
+  background: #faf7f0 !important;
+  color: #231f1a;
+}
+[data-theme='paper'] .margin-note .avatar {
+  color: #4a5d8a;
+  border-color: #4a5d8a;
+}
+
+/* 표 느낌의 멤버·순위 */
+[data-theme='paper'] .members .member + .member,
+[data-theme='paper'] .rank + .rank {
+  border-top: 1px solid #d8cebc;
+  padding-top: 12px;
+}
+[data-theme='paper'] .rank-no {
+  font-weight: 900;
+  font-size: 21px;
+}
+[data-theme='paper'] .rank.me .rank-no {
+  color: #b3372a;
+}
+[data-theme='paper'] .rank-name {
+  font-family: var(--font-display);
+}
+[data-theme='paper'] .dots {
+  align-self: flex-end;
+  margin-bottom: 5px;
+}
+[data-theme='paper'] .scoreboard {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+[data-theme='paper'] .score.theirs {
+  color: #a39a8b;
+  opacity: 1;
+}
+
+/* 탭바: 종이 하단 띠 */
+[data-theme='paper'] .tabbar {
+  bottom: 0;
+  width: min(430px, 100%);
+  background: rgb(233 225 209 / 0.94);
+  border: 0;
+  border-top: 1px solid #d8cebc;
+  box-shadow: none;
+  padding: 8px 8px 24px;
+}
+[data-theme='paper'] .tabbar button {
+  font-family: var(--font-display);
+  font-size: 11px;
+}
+[data-theme='paper'] .tabbar button.on::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b3372a;
+  margin-top: 2px;
+}
+
+/* 리더: 우측 상단 책갈피 리본 */
+[data-theme='paper'] .page {
+  position: relative;
+}
+[data-theme='paper'] .page::before {
+  content: '';
+  position: absolute;
+  right: 26px;
+  top: 0;
+  width: 14px;
+  height: 44px;
+  background: #b3372a;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+}
+[data-theme='paper'] .reader-top {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 0 4px;
+}
+[data-theme='paper'] .cover {
+  box-shadow: 1px 1px 0 #d9cfbd, 2px 2px 0 #cfc4ae, 3px 3px 0 #d9cfbd, 8px 14px 22px rgb(60 40 20 / 0.28);
+}
+[data-theme='paper'] .toast {
+  border: 1.5px dashed #a39a8b;
+}

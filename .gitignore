@@ -16,5 +16,8 @@ __pycache__/
 dist/
 *.egg-info/
 
+# Node / Vite (web/)
+node_modules/
+
 # 공통
 .env

@@ -54,6 +54,22 @@
 
 > ⚠️ 두 서버의 역할 분담(인증은 Spring, 도서·읽기방은 FastAPI로 나눌지, 하나로 통일할지)은 팀 합의가 필요합니다. PRD의 인증 명세(AUTH-01, 소셜 로그인)도 이 결정에 맞춰 갱신할 예정입니다.
 
+## 프론트엔드 프로토타입 — 테마 선택 (web/)
+
+두 시안을 직접 써 보고 투표할 수 있도록 **설정에서 유리 / 종이 서재 테마를 바꾸는** React 프로토타입입니다. 코드 설명은 [web/EXPLAIN.md](web/EXPLAIN.md).
+
+```bash
+cd web && npm install && npm run dev     # http://localhost:5173
+# 테마 링크: http://localhost:5173/?theme=paper
+```
+
+도서 API(아래)를 함께 켜면 리더에서 실제 위키문헌 본문을 읽고, 꺼져 있으면 데모 데이터로 동작합니다.
+
+| | 홈 | 리더 | 설정 |
+|---|---|---|---|
+| **유리** | <img src="docs/images/proto/glass-home.png" width="170"> | <img src="docs/images/proto/glass-reader.png" width="170"> | <img src="docs/images/proto/glass-settings.png" width="170"> |
+| **종이 서재** | <img src="docs/images/proto/paper-home.png" width="170"> | <img src="docs/images/proto/paper-reader.png" width="170"> | <img src="docs/images/proto/paper-settings.png" width="170"> |
+
 ## 빠른 시작 — 도서 API (Python)
 
 ```bash
