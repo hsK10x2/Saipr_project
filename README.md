@@ -39,8 +39,8 @@
 
 | | 홈 | 리더 | 레이스 |
 |---|---|---|---|
-| **A · 유리** | <img src="docs/images/01-home.png" width="180"> | <img src="docs/images/03-reader.png" width="180"> | <img src="docs/images/05-race.png" width="180"> |
-| **B · 종이 서재** | <img src="docs/images/b-01-home.png" width="180"> | <img src="docs/images/b-03-reader.png" width="180"> | <img src="docs/images/b-05-race.png" width="180"> |
+| **A · Grass** | <img src="docs/images/01-home.png" width="180"> | <img src="docs/images/03-reader.png" width="180"> | <img src="docs/images/05-race.png" width="180"> |
+| **B · Paper** | <img src="docs/images/b-01-home.png" width="180"> | <img src="docs/images/b-03-reader.png" width="180"> | <img src="docs/images/b-05-race.png" width="180"> |
 
 ## 저장소 구성
 
