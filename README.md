@@ -7,7 +7,7 @@
 같은 책을 각자의 속도로 읽으면서 친구의 진행률과 문단 반응이 실시간으로 겹쳐 보이고,
 팀을 짜서 공정한 페이지 레이스로 경쟁합니다.
 
-📄 **[PRD](docs/PRD.md)** · 🎨 [디자인 시스템](docs/design-system.md) · 🗳 [디자인 시안 투표](docs/design-vote.md) · 🏗 [아키텍처](docs/architecture.md) · 🎯 [GOAL](GOAL.md) · 🖼 [Figma](https://www.figma.com/design/mp2nKNmBdJ7Dg2rc2p9rht)
+ **[PRD](docs/PRD.md)** · [디자인 시스템](docs/design-system.md) · [디자인 시안 투표](docs/design-vote.md) · [아키텍처](docs/architecture.md) · [GOAL](GOAL.md) · 🖼 [Figma](https://www.figma.com/design/mp2nKNmBdJ7Dg2rc2p9rht)
 
 <img src="docs/images/01-home.png" width="200" alt="홈"> <img src="docs/images/03-reader.png" width="200" alt="리더"> <img src="docs/images/b-03-reader.png" width="200" alt="리더 시안 B">
 
