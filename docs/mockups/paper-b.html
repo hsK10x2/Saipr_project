@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>함께읽기 · 시안 B 종이 서재</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  /* 시안 B — 종이 서재 (Paper Library)
+     책 자체가 주인공인 에디토리얼 방향. 종이 질감 · 명조 제목 · 단일 액센트 = 인주(도장) 빨강.
+     친구의 흔적은 연필 메모·책갈피·도장처럼 "책에 남는 물건"으로 표현한다. */
+  :root { --paper: #f3eee4; --paper2: #e9e1d1; --card: #faf7f0; --ink: #231f1a; --soft: #6f675b; --faint: #a39a8b; --rule: #d8cebc; --seal: #b3372a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif; background: #d9d3c7; color: var(--ink); letter-spacing: -.2px; -webkit-font-smoothing: antialiased; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; justify-content: center; }
+  .screen { position: relative; width: 390px; height: 844px; border-radius: 44px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 80px rgb(60 40 20 / .2);
+    background-color: var(--paper);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .2  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  body.single { background: var(--paper); }
+  body.single .gallery { padding: 0; gap: 0; }
+  body.single .screen { position: fixed; left: 0; top: 0; border-radius: 0; box-shadow: none; }
+  body.single .screen:not(.on) { display: none; }
+
+  .serif { font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif; }
+  .pen { font-family: 'Nanum Pen Script', cursive; letter-spacing: 0; }
+  .status { display: flex; justify-content: space-between; padding: 16px 30px 0 34px; font-size: 15px; font-weight: 500; letter-spacing: 0; }
+  .content { flex: 1; display: flex; flex-direction: column; gap: 18px; padding: 18px 24px 0; overflow: hidden; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .kicker { font-size: 11px; letter-spacing: 2.5px; color: var(--faint); }
+  h1 { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 30px; letter-spacing: -1px; line-height: 1.2; }
+  h2 { font-family: 'Noto Serif KR', serif; font-weight: 600; font-size: 17px; letter-spacing: -.4px; display: flex; align-items: center; gap: 10px; }
+  h2::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+  .double { border-top: 3px double var(--ink); }
+  .btn { background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 4px; font-size: 14px; font-weight: 500; }
+  .seal { color: var(--seal); border: 2px solid var(--seal); border-radius: 50%; display: grid; place-items: center; font-family: 'Noto Serif KR', serif; font-weight: 700; transform: rotate(-12deg); opacity: .88; }
+  .ini { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-size: 11px; font-weight: 500; background: var(--card); flex: none; }
+
+  /* 책 오브젝트 */
+  .book3d { width: 86px; height: 124px; border-radius: 2px 5px 5px 2px; flex: none; position: relative; color: #fff; padding: 12px 10px 0 16px; font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 15px; line-height: 1.25;
+    background-image: linear-gradient(90deg, rgb(0 0 0 / .35), rgb(0 0 0 / .05) 9%, rgb(255 255 255 / .18) 11%, transparent 20%, transparent 92%, rgb(0 0 0 / .12));
+    box-shadow: 1px 1px 0 #d9cfbd, 2px 2px 0 #cfc4ae, 3px 3px 0 #d9cfbd, 8px 14px 22px rgb(60 40 20 / .28); }
+  .book3d small { display: block; font-size: 10px; font-weight: 400; opacity: .85; margin-top: 6px; }
+  .ruler { position: relative; height: 18px; border-bottom: 1.5px solid var(--ink); background: repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 10%) bottom / 100% 6px no-repeat; }
+  .ribbon { position: absolute; top: -8px; width: 12px; height: 30px; background: var(--seal); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%); }
+
+  /* 카드 */
+  .index { background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 14px 16px; position: relative; box-shadow: 0 1px 0 #fff inset, 0 6px 14px rgb(60 40 20 / .07); }
+  .tape { position: absolute; top: -8px; left: 50%; width: 60px; height: 16px; transform: translateX(-50%) rotate(-3deg); background: rgb(230 214 170 / .75); }
+
+  /* 탭 */
+  .tabs { margin-top: auto; display: flex; justify-content: space-around; padding: 10px 12px 30px; border-top: 1px solid var(--rule); background: rgb(233 225 209 / .7); }
+  .tabs span { display: flex; flex-direction: column; align-items: center; gap: 3px; font-family: 'Noto Serif KR', serif; font-size: 12px; color: var(--soft); }
+  .tabs span b { font-size: 17px; font-weight: 400; font-family: 'Noto Sans KR'; }
+  .tabs span.on { color: var(--ink); font-weight: 700; }
+  .tabs span.on::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--seal); }
+
+  /* 리더 */
+  .page { flex: 1; margin: 8px 14px 16px; background: #fbf8f1; border-radius: 4px 10px 10px 4px; padding: 20px 30px 16px; display: flex; flex-direction: column; position: relative;
+    box-shadow: inset 14px 0 18px -14px rgb(60 40 20 / .25), 0 1px 0 #e2d8c5, 0 2px 0 #fbf8f1, 0 3px 0 #e2d8c5, 0 12px 24px rgb(60 40 20 / .14); }
+  .page p { font-family: 'Noto Serif KR', serif; font-size: 16.5px; line-height: 1.9; text-indent: 1em; text-align: justify; word-break: keep-all; margin-bottom: 8px; }
+  .page mark { background: linear-gradient(transparent 60%, rgb(179 55 42 / .18) 60%); color: inherit; }
+  .margin-note { font-family: 'Nanum Pen Script', cursive; font-size: 21px; line-height: 1.15; color: #4a5d8a; transform: rotate(-2.5deg); margin: 0 0 12px 18px; display: flex; gap: 8px; align-items: center; }
+  .slip { margin: 0 auto; border: 1.5px dashed var(--faint); border-radius: 3px; padding: 9px 14px; font-size: 12.5px; color: var(--soft); background: var(--card); display: flex; gap: 8px; align-items: center; }
+
+  /* 표 */
+  .ledger { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .ledger th { font-size: 11px; letter-spacing: 2px; color: var(--faint); font-weight: 400; text-align: left; padding: 0 0 8px; border-bottom: 1.5px solid var(--ink); }
+  .ledger td { padding: 11px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+  .hatch { height: 6px; background: var(--paper2); border-radius: 1px; overflow: hidden; width: 110px; }
+  .hatch b { display: block; height: 100%; background: repeating-linear-gradient(-45deg, var(--ink) 0 2px, transparent 2px 4px); }
+  .lead { flex: 1; border-bottom: 1.5px dotted var(--faint); margin: 0 8px 5px; align-self: flex-end; }
+  .spines { display: flex; align-items: flex-end; gap: 2px; height: 96px; padding: 0 2px; border-bottom: 4px solid #8a6a45; }
+  /* 한글 keep-all + justify는 단어 사이가 과하게 벌어져 왼쪽 정렬 */
+  .page p { text-align: left; }
+  #theirs { height: 96px !important; }
+  .spines i { display: block; width: 12px; border-radius: 1px 1px 0 0; background-image: linear-gradient(90deg, rgb(0 0 0 / .18), transparent 30%, rgb(255 255 255 / .15) 50%, transparent 70%); }
+</style>
+</head>
+<body>
+<div class="gallery">
+
+<!-- B1 홈 · 서재 -->
+<section class="screen" id="s1">
+  <div class="status"><span>9:41</span><span>5G 100%</span></div>
+  <div class="content">
+    <div>
+      <div class="kicker">2026. 9. 11 · 목요일</div>
+      <h1 style="margin-top:4px">오늘 펼칠 책</h1>
+    </div>
+    <div class="double"></div>
+    <div class="row" style="align-items:flex-start;gap:18px">
+      <div class="book3d" style="background-color:#6e5238">봄봄<small>김유정</small></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;padding-top:2px">
+        <div class="serif" style="font-size:22px;font-weight:700;letter-spacing:-.6px">봄봄</div>
+        <div style="font-size:12.5px;color:var(--soft)">김유정 · 위키문헌 · 전문 읽기</div>
+        <div class="ruler"><span class="ribbon" style="left:60%"></span></div>
+        <div class="row"><span style="font-size:12px;color:var(--soft)">62% · 18 / 29</span><span class="btn">이어 읽기 →</span></div>
+      </div>
+    </div>
+    <h2>내 읽기방</h2>
+    <div class="index">
+      <div class="row"><div><div class="serif" style="font-weight:600;font-size:16px">국문과 봄봄 뽀개기</div><div style="font-size:12px;color:var(--soft);margin-top:2px">비동기 · 서연 · 민지 · 준호</div></div><span class="seal" style="width:44px;height:44px;font-size:13px">D-3</span></div>
+      <div class="pen" style="font-size:21px;color:#4a5d8a;margin-top:6px">서연: 18까지 읽었어! 따라와 ㅎㅎ</div>
+    </div>
+    <div class="index">
+      <div class="row"><div><div class="serif" style="font-weight:600;font-size:16px">연구실 고전 레이스</div><div style="font-size:12px;color:var(--soft);margin-top:2px">팀전 · 페이지 레이스</div></div><span style="font-size:12px;color:var(--seal);font-weight:500">+42 앞섬</span></div>
+    </div>
+  </div>
+  <nav class="tabs"><span class="on"><b>▤</b>서재</span><span><b>⌕</b>찾기</span><span><b>◎</b>읽기방</span><span><b>▲</b>리그</span></nav>
+</section>
+
+<!-- B2 찾기 · 도서 카드 목록 -->
+<section class="screen" id="s2">
+  <div class="status"><span>9:41</span><span>5G 100%</span></div>
+  <div class="content" style="gap:16px">
+    <h1>찾기</h1>
+    <div class="row" style="border-bottom:2px solid var(--ink);padding:6px 0 8px"><span class="serif" style="font-size:19px;flex:1">봄봄</span><span style="color:var(--faint)">⌕</span></div>
+    <div style="display:flex;gap:18px;font-size:13px;color:var(--soft)"><span style="color:var(--ink);font-weight:700;border-bottom:2px solid var(--seal);padding-bottom:4px">전체</span><span>전문 읽기</span><span>진행률 기록</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="index row" style="justify-content:flex-start;gap:14px"><div class="book3d" style="width:44px;height:62px;padding:6px 4px 0 8px;font-size:10px;background-color:#6e5238">봄봄</div><div style="flex:1"><div class="serif" style="font-weight:600">봄봄</div><div style="font-size:12px;color:var(--soft)">김유정 · 위키문헌</div></div><span class="seal" style="width:40px;height:40px;font-size:11px">전문</span></div>
+      <div class="index row" style="justify-content:flex-start;gap:14px"><div class="book3d" style="width:44px;height:62px;padding:6px 4px 0 8px;font-size:10px;background-color:#9c3b2c">동백</div><div style="flex:1"><div class="serif" style="font-weight:600">동백꽃</div><div style="font-size:12px;color:var(--soft)">김유정 · 위키문헌</div></div><span class="seal" style="width:40px;height:40px;font-size:11px">전문</span></div>
+      <div class="index row" style="justify-content:flex-start;gap:14px"><div class="book3d" style="width:44px;height:62px;padding:6px 4px 0 8px;font-size:10px;background-color:#34496e">봄봄</div><div style="flex:1"><div class="serif" style="font-weight:600">봄봄 (한국문학 전집 12)</div><div style="font-size:12px;color:var(--soft)">문학과지성사 · 카카오</div></div><span style="font-size:11px;color:var(--soft);border:1px solid var(--faint);border-radius:3px;padding:3px 7px">기록</span></div>
+      <div class="index row" style="justify-content:flex-start;gap:14px"><div class="book3d" style="width:44px;height:62px;padding:6px 4px 0 8px;font-size:9px;background-color:#2f5a44">Spring</div><div style="flex:1"><div class="serif" style="font-weight:600">Spring, Spring</div><div style="font-size:12px;color:var(--soft)">Kim Yu-jeong · Google Books</div></div><span style="font-size:11px;color:var(--soft);border:1px solid var(--faint);border-radius:3px;padding:3px 7px">기록</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--soft);line-height:1.6"><b style="color:var(--seal)">전문</b> 도장이 찍힌 책은 앱에서 바로 읽을 수 있어요. <b>기록</b> 책은 진행률만 함께 나눠요.</p>
+  </div>
+  <nav class="tabs"><span><b>▤</b>서재</span><span class="on"><b>⌕</b>찾기</span><span><b>◎</b>읽기방</span><span><b>▲</b>리그</span></nav>
+</section>
+
+<!-- B3 리더 · 종이 한 쪽 -->
+<section class="screen" id="s3">
+  <div class="status"><span>9:41</span><span>5G 100%</span></div>
+  <div class="row" style="padding:10px 26px 2px;font-size:13px;color:var(--soft)"><span>‹ 서재</span><span class="serif" style="letter-spacing:3px;color:var(--faint);font-size:11px">봄 봄 · 김 유 정</span><span>가</span></div>
+  <article class="page">
+    <span class="ribbon" style="right:28px;top:0;height:46px;width:14px"></span>
+    <p style="text-indent:0"><span class="serif" style="float:left;font-size:44px;line-height:.9;font-weight:900;margin:5px 8px 0 0">"</span>장인님! 인제 저……"</p>
+    <p>내가 이렇게 뒤통수를 긁고, 나이가 찼으니 성례를 시켜 줘야 하지 않겠느냐고 채근이면 그 대답이 늘 <mark>"이 자식아! 성례구 뭐구 미처 자라야지!"</mark> 하고 만다.</p>
+    <div class="margin-note"><span class="ini" style="border-color:#4a5d8a;color:#4a5d8a">민</span>↖ 장인님 매년 이 소리 ㅋㅋ</div>
+    <p>이 자라야 한다는 것은 내 키를 말하는 것이다. 장인님은 점순이의 키가 자라야 한다는 것을 핑계로 벌써 3년 7개월이나 나를 부려먹고 있었다.</p>
+    <div style="font-size:12px;color:var(--soft);display:flex;align-items:center;gap:8px;margin:2px 0 14px"><span class="ini" style="width:18px;height:18px;font-size:9px">서</span>서연님이 이 쪽을 펼쳐 두었어요</div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:14px">
+      <div class="slip"><span class="pen" style="font-size:18px;color:var(--seal)">접힌 쪽지 5장</span>이 뒤를 읽으면 펼쳐져요</div>
+      <div class="serif" style="text-align:center;font-size:12px;letter-spacing:3px;color:var(--faint)">— 18 —</div>
+    </div>
+  </article>
+  <div style="height:4px;margin:0 26px 26px;background:var(--paper2);border-radius:2px"><div style="width:62%;height:100%;background:var(--ink);border-radius:2px"></div></div>
+</section>
+
+<!-- B4 읽기방 · 대출 카드 -->
+<section class="screen" id="s4">
+  <div class="status"><span>9:41</span><span>5G 100%</span></div>
+  <div class="content" style="gap:16px">
+    <div>
+      <div class="kicker">읽기방 · 비동기</div>
+      <h1 style="font-size:27px;margin-top:4px">국문과 봄봄 뽀개기</h1>
+      <div style="font-size:13px;color:var(--soft);margin-top:4px">『봄봄』 김유정 · 9월 14일(일)까지 · D-3</div>
+    </div>
+    <div style="background:#FEE500;border-radius:6px;padding:13px;text-align:center;font-weight:500;color:#191919;box-shadow:0 4px 10px rgb(120 100 0 / .15)">카카오톡으로 친구 초대</div>
+    <div class="index" style="padding:16px 18px 6px">
+      <div class="serif" style="font-size:13px;letter-spacing:4px;text-align:center;color:var(--soft);margin-bottom:10px">대 출 카 드</div>
+      <table class="ledger">
+        <tr><th>이름</th><th>진도</th><th style="text-align:right">도장</th></tr>
+        <tr><td>김서연</td><td><div class="hatch"><b style="width:72%"></b></div></td><td style="text-align:right"><span class="seal" style="width:34px;height:34px;font-size:9px;display:inline-grid">4일<br></span></td></tr>
+        <tr><td><b>나</b></td><td><div class="hatch"><b style="width:62%"></b></div></td><td style="text-align:right;font-size:12px;color:var(--soft)">62%</td></tr>
+        <tr><td>최민지</td><td><div class="hatch"><b style="width:41%"></b></div></td><td style="text-align:right;font-size:12px;color:var(--soft)">41%</td></tr>
+        <tr><td style="border:0">박준호</td><td style="border:0"><div class="hatch"><b style="width:18%"></b></div></td><td style="text-align:right;font-size:12px;color:var(--soft);border:0">18% · 트래커</td></tr>
+      </table>
+    </div>
+    <h2>남겨진 쪽지</h2>
+    <div class="index" style="margin-top:4px"><span class="tape"></span><div class="pen" style="font-size:21px;color:#4a5d8a">"성례구 뭐구 ㅋㅋ" <span style="font-size:17px;color:var(--faint)">— 민지, 18쪽</span></div></div>
+    <div class="slip" style="margin:0">서연의 쪽지 1장은 25쪽까지 읽으면 펼쳐져요</div>
+  </div>
+  <nav class="tabs"><span><b>▤</b>서재</span><span><b>⌕</b>찾기</span><span class="on"><b>◎</b>읽기방</span><span><b>▲</b>리그</span></nav>
+</section>
+
+<!-- B5 페이지 레이스 · 쌓이는 책장 -->
+<section class="screen" id="s5">
+  <div class="status"><span>9:41</span><span>5G 100%</span></div>
+  <div class="content" style="gap:16px">
+    <div>
+      <div class="kicker">페이지 레이스 · 『동백꽃』</div>
+      <h1 style="margin-top:4px">2일 14시간 남음</h1>
+    </div>
+    <div class="double"></div>
+    <div class="row" style="align-items:flex-end">
+      <div><div style="font-size:12px;color:var(--seal);font-weight:700;letter-spacing:1px">우리 팀</div><div class="serif" style="font-size:58px;font-weight:900;letter-spacing:-2px;line-height:1">128</div></div>
+      <div class="serif" style="font-size:15px;color:var(--faint);padding-bottom:10px">대</div>
+      <div style="text-align:right"><div style="font-size:12px;color:var(--soft);letter-spacing:1px">옆 연구실</div><div class="serif" style="font-size:58px;font-weight:900;letter-spacing:-2px;line-height:1;color:var(--faint)">86</div></div>
+    </div>
+    <div>
+      <div class="spines" id="ours"></div>
+      <div style="font-size:11px;color:var(--soft);margin:6px 0 12px">우리 책장 · 8청크 = 한 권</div>
+      <div class="spines" id="theirs" style="height:70px;opacity:.55"></div>
+      <div style="font-size:11px;color:var(--soft);margin-top:6px">옆 연구실 책장</div>
+    </div>
+    <div class="index" style="display:flex;flex-direction:column;gap:9px;font-size:14px">
+      <div class="row"><span>이도윤</span><span class="lead"></span><span>164 <span style="color:var(--faint);font-size:12px">검증 98%</span></span></div>
+      <div class="row"><b>나</b><span class="lead"></span><span>131 <span style="color:var(--faint);font-size:12px">검증 100%</span></span></div>
+      <div class="row"><span>한지우</span><span class="lead"></span><span>89 <span style="color:var(--faint);font-size:12px">검증 91%</span></span></div>
+    </div>
+    <p style="font-size:12px;color:var(--soft)">빠르게 넘긴 쪽은 책장에 꽂히지 않아요. 천천히 읽어도 괜찮아요.</p>
+    <div class="btn" style="text-align:center;padding:15px;font-size:15px;margin-top:auto;margin-bottom:34px">이어 읽고 한 권 더 꽂기</div>
+  </div>
+</section>
+
+<!-- B6 주간 리그 · 신문 순위표 -->
+<section class="screen" id="s6">
+  <div class="status"><span>9:41</span><span>5G 100%</span></div>
+  <div class="content" style="gap:14px">
+    <div style="text-align:center">
+      <div class="kicker">제 37 주 · 실버 리그 · 월요일 00:00 마감</div>
+      <h1 style="font-size:32px;margin-top:6px">이번 주 순위</h1>
+    </div>
+    <div class="double"></div>
+    <div style="display:flex;flex-direction:column">
+      <div class="row" style="padding:12px 2px;border-bottom:1px solid var(--rule)"><span class="serif" style="font-size:22px;font-weight:900;width:26px">1</span><span class="serif" style="font-size:16px">북극곰 독서단</span><span class="lead"></span><span style="font-size:14px">412</span></div>
+      <div class="row" style="padding:12px 2px;border-bottom:1px solid var(--rule);position:relative"><span class="serif" style="font-size:22px;font-weight:900;width:26px;color:var(--seal)">2</span><b class="serif" style="font-size:16px">연구실 고전 레이스</b><span class="lead"></span><b style="font-size:14px">388</b><span class="seal" style="position:absolute;left:190px;top:4px;width:46px;height:46px;font-size:11px;background:rgb(250 247 240 / .6)">우리팀</span></div>
+      <div class="row" style="padding:12px 2px;border-bottom:1px solid var(--rule)"><span class="serif" style="font-size:22px;font-weight:900;width:26px">3</span><span class="serif" style="font-size:16px">새벽 3시 문학회</span><span class="lead"></span><span style="font-size:14px">341</span></div>
+      <div style="text-align:center;font-size:10px;letter-spacing:4px;color:var(--seal);padding:8px 0;border-bottom:1.5px solid var(--seal)">▲ 골 드 승 급 선 ▲</div>
+      <div class="row" style="padding:12px 2px;border-bottom:1px solid var(--rule);color:var(--soft)"><span class="serif" style="font-size:18px;width:26px">4</span><span class="serif" style="font-size:15px">국문과 봄봄 뽀개기</span><span class="lead"></span><span style="font-size:14px">290</span></div>
+      <div class="row" style="padding:12px 2px;border-bottom:1px solid var(--rule);color:var(--soft)"><span class="serif" style="font-size:18px;width:26px">5</span><span class="serif" style="font-size:15px">퇴근길 한 챕터</span><span class="lead"></span><span style="font-size:14px">244</span></div>
+      <div class="row" style="padding:12px 2px;color:var(--soft)"><span class="serif" style="font-size:18px;width:26px">6</span><span class="serif" style="font-size:15px">고양이와 책</span><span class="lead"></span><span style="font-size:14px">198</span></div>
+    </div>
+    <p class="serif" style="font-size:12px;color:var(--faint);text-align:center">단위: 검증된 청크 · 팀 평균</p>
+  </div>
+  <nav class="tabs"><span><b>▤</b>서재</span><span><b>⌕</b>찾기</span><span><b>◎</b>읽기방</span><span class="on"><b>▲</b>리그</span></nav>
+</section>
+
+</div>
+<script>
+  // 레이스 책장: 8청크 = 한 권. 높이·색은 결정적 의사난수로 고정해 렌더링마다 같게 한다.
+  const palette = ['#6e5238', '#9c3b2c', '#34496e', '#2f5a44', '#8a6f3c', '#5b4a6b', '#3f3a35'];
+  const shelf = (id, books, seed) => {
+    let s = seed, html = '';
+    for (let i = 0; i < books; i++) {
+      s = (s * 9301 + 49297) % 233280;
+      const h = 62 + (s % 30), c = palette[s % palette.length];
+      html += `<i style="height:${h}px;background-color:${c}"></i>`;
+    }
+    document.getElementById(id).innerHTML = html;
+  };
+  shelf('ours', 16, 7); shelf('theirs', 11, 3);
+  const pick = location.hash.slice(1);
+  if (pick) { document.body.classList.add('single'); document.getElementById('s' + pick)?.classList.add('on'); }
+</script>
+</body>
+</html>

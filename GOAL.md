@@ -31,6 +31,14 @@
 - [ ] **Phase 5** — 팀 · 주간 리그 · 리더보드
 - [ ] **Phase 6** — FCM 푸시 · 스테이징 배포
 
+## Design decision (Phase 2 착수 전 게이트)
+
+팀 투표로 **시안 A(Glass v2) 또는 B(종이 서재) 중 하나를 확정**하고, 선택안의 토큰을 `docs/design-system.md`에 단일 기준으로 남긴다.
+
+- 근거 자료: [docs/design-vote.md](docs/design-vote.md) (두 시안 6화면씩 · 판단 기준 4개)
+- 완료 판정: 팀원 과반 득표안 결정 → 탈락안 목업은 `docs/mockups/archive/`로 이동 → 리더 화면 가독성 기준(본문 16px 이상 · 대비 AA) 통과
+- 동률이면: 리더 화면 한 장만 두 시안으로 5분 실사용 테스트 후 재투표
+
 ## Scope
 
 - In: 웹 MVP 백엔드(FastAPI) + Reflex 웹 프론트, 퍼블릭 도메인 전문, 상용 도서 메타데이터·수동 진행률.
